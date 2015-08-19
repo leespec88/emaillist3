@@ -45,7 +45,7 @@ public class EmaillistController {
 	}
 	
 	@RequestMapping("/delete/{no}")
-	public String delete( @PathVariable("no") long no ){
+	public String delete( @PathVariable ("no") long no ){
 		
 		emaillistDao.delete(no); 
 		
