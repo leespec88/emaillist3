@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="emaillist">
+
+	<!-- alias 를 안만들면 밑에 type 에 있는 경로를 다써줘야된다. -->
+	<typeAlias alias="EmailListVo" type="com.bit2015.emaillist3.vo.EmaillistVo" />
+
+	<resultMap class="EmailListVo" id="resultMapList">
+		<result column="no" property="no" />
+		<result column="first_name" property="firstName" />
+		<result column="last_name" property="lastName" />
+		<result column="email" property="email" />
+	</resultMap>
+	<insert id="insert" parameterClass="EmaillistVo">
+	<![CDATA[insert into email_list
+				    values ( email_list_no_seq.nextval, #firstName#, #lastName#, #email# )]]>
+	</insert>
+	<select id="list" resultMap="resultMapList">
+		<![CDATA[
+			select *from email_list
+		]]>
+	</select>
+
+	<delete id="delete" parameterClass="java.lang.Long">
+		<![CDATA[
+			delete from email_list where no=#no#
+		]]>
+	</delete>
+
+	<!-- 두개의 값을 파라미터로 전달해 지우는 방식 Map을 이용한다. <delete id="delete" parameterClass="java.util.Map"> 
+		<![CDATA[ delete from email_list where first_name=#fn# and last_name=#ln# 
+		]]> </delete> -->
+
+	<!-- 04 sping 예제 5번 
+	
+	<insert id="insert2" parameterClass="EmaillistVo">
+		<selectKey keyProperty="no" resultClass="java.lang.Long">
+			<![CDATA[select email_list_seq.nextval as no from dual]]>
+		</selectKey>
+		
+		<![CDATA[insert into email_list values 
+				( #no#, #firstName#, #lastName#, #email#, SYSDATE )]]>
+	</insert>
+	
+	-->
+
+</sqlMap> 
